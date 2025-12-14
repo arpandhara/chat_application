@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRoute);
 
-const PORT = ENV.PORT || 3000;
+const PORT = ENV.PORT || 5000;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
