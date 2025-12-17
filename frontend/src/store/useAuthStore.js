@@ -6,6 +6,7 @@ export const useAuthStore = create((set) => ({
   authUser: null,
   isCheckingAuth: true,
   isSigningUp: false,
+  isLogingIn: false,
 
   checkAuth: async () => {
     try {
@@ -23,19 +24,65 @@ export const useAuthStore = create((set) => ({
     set({ isSigningUp: true });
 
     try {
-        const res = await axiosInstance.post("/auth/signUp" , data);
+      const res = await axiosInstance.post("/auth/signUp", data);
 
-        set({
-            authUser : res.data
-        })
+      set({
+        authUser: res.data,
+      });
 
-        toast.success("Account created successfully!")
+      toast.success("Account created successfully!");
     } catch (error) {
-        const errorMessage = error.response?.data?.message || "Something went wrong";
-        toast.error(errorMessage);
-        console.error("SignUp Error:", error);
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+      toast.error(errorMessage);
+      console.error("SignUp Error:", error);
     } finally {
       set({ isSigningUp: false });
+    }
+  },
+
+  logIn: async (data) => {
+    set({ isLogingIn: true });
+
+    try {
+      const res = await axiosInstance.post("/auth/logIn", data);
+      set({ authUser: res.data });
+
+      toast.success("Logged In Successfully");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+      toast.error(errorMessage);
+      console.error("LogIn Error", error);
+    } finally {
+      set({ isLogingIn: false });
+    }
+  },
+
+  logOut: async () => {
+    try {
+      const res = await axiosInstance.get("/auth/logOut");
+      toast.success("Logged out successfully");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+      toast.error(errorMessage);
+      console.error("LogOut Error: ", error);
+    } finally {
+      set({ authUser: null });
+    }
+  },
+
+  updateProfile: async (data) => {
+    try {
+      const res = await axiosInstance.post("/auth/updateProfile", data);
+      set({ authUser: res.data });
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+      toast.error(errorMessage);
+      console.error("updateProfile Error: ", error);
     }
   },
 }));
