@@ -6,7 +6,7 @@ import { useChatStore } from "../store/useChatStore";
 const mouseClickSound = new Audio("/sounds/mouse-click.mp3");
 
 function ProfileHeader() {
-  const { logout, authUser, updateProfile } = useAuthStore();
+  const { logOut, authUser, updateProfile } = useAuthStore();
   const { isSoundEnabled, toggleSound } = useChatStore();
   const [selectedImg, setSelectedImg] = useState(null);
 
@@ -70,7 +70,7 @@ function ProfileHeader() {
           {/* LOGOUT BTN */}
           <button
             className="text-slate-400 hover:text-slate-200 transition-colors"
-            onClick={logout}
+            onClick={logOut}
           >
             <LogOutIcon className="size-5" />
           </button>

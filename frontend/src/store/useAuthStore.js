@@ -7,6 +7,7 @@ export const useAuthStore = create((set) => ({
   isCheckingAuth: true,
   isSigningUp: false,
   isLogingIn: false,
+  onlineUsers : [] ,
 
   checkAuth: async () => {
     try {
@@ -60,6 +61,7 @@ export const useAuthStore = create((set) => ({
   },
 
   logOut: async () => {
+    // console.log("clicked")
     try {
       const res = await axiosInstance.get("/auth/logOut");
       toast.success("Logged out successfully");
